@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abad | Digital Excellence</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.28/build/spline-viewer.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1d1d1f;
+            --accent: #0071e3;
+            --secondary: #86868b;
+            --card-bg: #f5f5f7;
+            --border: rgba(0,0,0,0.1);
+            --btn-bg: #f5f5f7;
+            --glow-1: rgba(0, 113, 227, 0.08);
+            --glow-2: rgba(100, 210, 255, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #000000;
+            --text: #f5f5f7;
+            --secondary: #a1a1a6;
+            --card-bg: #1c1c1e;
+            --border: rgba(255,255,255,0.1);
+            --btn-bg: #333336;
+            --glow-1: rgba(0, 113, 227, 0.15);
+            --glow-2: rgba(94, 92, 230, 0.15);
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.47;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 1. Живой фон (Blurry Glow) */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 25%, var(--glow-1) 0%, transparent 35%),
+                radial-gradient(circle at 85% 75%, var(--glow-2) 0%, transparent 35%);
+            animation: moveGlow 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveGlow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(3%, 4%); }
+        }
+
+        /* Навигация */
+        nav {
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(var(--bg), 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            border-bottom: 0.5px solid var(--border);
+        }
+
+        .logo { font-weight: 700; font-size: 24px; letter-spacing: -1px; text-transform: lowercase; }
+        .nav-controls { display: flex; align-items: center; gap: 20px; }
+
+        .theme-toggle {
+            background: var(--btn-bg);
+            border: none;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        .apple-btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 9px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .apple-btn:hover { opacity: 0.9; transform: scale(0.97); }
+
+        .hero { padding: 120px 10% 60px; text-align: center; }
+        .hero h1 { 
+            font-size: clamp(38px, 8vw, 72px); 
+            font-weight: 700; 
+            letter-spacing: -0.04em; 
+            margin: 0 auto 24px;
+            max-width: 900px;
+            transition: opacity 0.5s ease;
+        }
+        .hero p { color: var(--secondary); font-size: clamp(18px, 3vw, 24px); max-width: 750px; margin: 0 auto; }
+
+        .sphere-container { width: 100%; height: 400px; margin: 20px 0; }
+
+        .stack-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+        .tag { background: var(--card-bg); padding: 8px 16px; border-radius: 14px; font-size: 13px; border: 0.5px solid var(--border); color: var(--secondary); font-weight: 500; }
+
+        /* --- BENTO GRID --- */
+        .services-grid { 
+            padding: 80px 10%; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 24px; 
+        }
+        .service-card { 
+            background: var(--card-bg); 
+            padding: 48px; 
+            border-radius: 32px; 
+            border: 0.5px solid var(--border); 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .service-card:hover { transform: scale(1.01); }
+        .service-card h3 { font-size: 28px; margin: 0 0 16px; font-weight: 600; letter-spacing: -0.5px; }
+        .service-card p { color: var(--secondary); font-size: 17px; line-height: 1.5; margin-bottom: 32px; flex-grow: 1; }
+
+        .card-large { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; }
+        @media (max-width: 850px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .card-large { grid-column: span 1; grid-template-columns: 1fr; }
+            .test-ai-container { grid-column: span 1 !important; }
+        }
+
+        .test-ai-btn { background: var(--text); color: var(--bg); padding: 14px 28px; border-radius: 24px; text-decoration: none; font-size: 15px; font-weight: 600; width: fit-content; transition: opacity 0.2s; display: inline-block; }
+        .test-ai-btn:hover { opacity: 0.8; }
+
+        .roadmap { padding: 100px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; background: rgba(var(--accent), 0.02); }
+        .step { position: relative; }
+        .step-num { font-size: 56px; font-weight: 700; color: var(--accent); opacity: 0.15; display: block; margin-bottom: 10px; }
+        .step h4 { margin: 0 0 12px; font-size: 22px; font-weight: 600; }
+        .step p { font-size: 15px; color: var(--secondary); margin: 0; }
+
+        .faq { padding: 100px 15%; }
+        .faq h2 { text-align: center; font-size: 42px; font-weight: 700; margin-bottom: 50px; letter-spacing: -1px; }
+        .faq-item { border-bottom: 0.5px solid var(--border); padding: 28px 0; cursor: pointer; }
+        .faq-question { font-size: 20px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease; color: var(--secondary); font-size: 16px; line-height: 1.6; }
+        .faq-item.active .faq-answer { max-height: 200px; padding-top: 20px; }
+        .faq-icon { transition: transform 0.3s; color: var(--accent); font-size: 24px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        footer { padding: 60px 10%; border-top: 0.5px solid var(--border); text-align: center; }
+        .status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--card-bg); padding: 8px 16px; border-radius: 20px; font-size: 13px; border: 0.5px solid var(--border); margin-bottom: 24px; }
+        .status-dot { width: 8px; height: 8px; background: #34c759; border-radius: 50%; box-shadow: 0 0 10px #34c759; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- СТИЛИ ИИ АССИСТЕНТА --- */
+        #ai-chat-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            font-family: -apple-system, sans-serif;
+        }
+
+        .chat-trigger {
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .chat-trigger:hover { transform: scale(1.05); }
+
+        .bulb-icon {
+            width: 10px; height: 10px;
+            background: #ffcc00;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #ffcc00;
+            animation: bulb-blink 1.5s infinite;
+        }
+        @keyframes bulb-blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+        .chat-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: var(--card-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 24px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+        .message.assistant { background: var(--btn-bg); align-self: flex-start; color: var(--text); border-bottom-left-radius: 4px; }
+        .message.user { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 0.5px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
+            border: none;
+            background: var(--btn-bg);
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: var(--text);
+            outline: none;
+        }
+
+        .chat-send-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0 15px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) { .chat-window { width: calc(100vw - 40px); height: 400px; } }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav>
+    <div class="logo">abad</div>
+    <div class="nav-controls">
+        <button class="theme-toggle" id="themeBtn" title="Переключить тему">☾</button>
+        <a href="https://t.me/sahatmuradov" target="_blank" class="apple-btn">Заказать проект</a>
+    </div>
+</nav>
+
+<section class="hero reveal">
+    <h1 id="dynTitle">Разработка вне времени.</h1>
+    <p>Создаем совершенные цифровые продукты для бизнеса, используя мощь AI и нативного кода.</p>
+    
+    <div class="sphere-container">
+        <spline-viewer url="https://prod.spline.design/6Wq1Q7YEjmUM2Z9G/scene.splinecode"></spline-viewer>
+    </div>
+    
+    <div class="stack-tags">
+        <span class="tag">Swift / iOS</span>
+        <span class="tag">Kotlin / Android</span>
+        <span class="tag">React & Node.js</span>
+        <span class="tag">1С Интеграция</span>
+        <span class="tag">LLM / GPT</span>
+        <span class="tag">Telegram Mini Apps</span>
+        <span class="tag">Web3 / Crypto</span>
+    </div>
+</section>
+
+<section class="services-grid reveal">
+    <div class="service-card bento-item">
+        <h3>Web-разработка</h3>
+        <p>Высокопроизводительные сайты и интернет-магазины. Глубокая интеграция с 1С, фокус на конверсию и безупречный минимализм.</p>
+    </div>
+    
+    <div class="service-card bento-item">
+        <h3>Mobile & Telegram</h3>
+        <p>Нативные приложения на Swift и Kotlin. Лидирующие решения в области Telegram Mini Apps и умных ботов для автоматизации.</p>
+    </div>
+
+    <div class="service-card card-large bento-item">
+        <div>
+            <h3>AI Системы</h3>
+            <p>Внедрение нейросетей в бизнес-процессы: от умной аналитики до AI-ассистентов поддержки 24/7.</p>
+        </div>
+        <div style="font-size: 80px; opacity: 0.1; font-weight: 800; text-align: right;">AI</div>
+    </div>
+    
+    <div class="test-ai-container" style="grid-column: span 2; margin-top: -10px; padding-left: 10px;">
+        <a href="https://abaddevelopai.netlify.app/" target="_blank" class="test-ai-btn">Протестировать AI</a>
+    </div>
+</section>
+
+<section class="roadmap reveal">
+    <div class="step">
+        <span class="step-num">01</span>
+        <h4>Аналитика</h4>
+        <p>Погружаемся в бизнес-процессы и строим архитектуру решения.</p>
+    </div>
+    <div class="step">
+        <span class="step-num">02</span>
+        <h4>Дизайн</h4>
+        <p>Проектируем интерфейсы, следуя канонам Apple Design Language.</p>
+    </div>
+    <div class="step">
+        <span class="step-num">03</span>
+        <h4>Реализация</h4>
+        <p>Пишем чистый код, внедряем ИИ и настраиваем интеграции.</p>
+    </div>
+    <div class="step">
+        <span class="step-num">04</span>
+        <h4>Поддержка</h4>
+        <p>Обеспечиваем стабильный рост и масштабирование продукта.</p>
+    </div>
+</section>
+
+<section class="faq reveal">
+    <h2>Вопросы и ответы</h2>
+    <div class="faq-item">
+        <div class="faq-question">Как с нами связаться? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Самый быстрый и удобный способ — написать в Telegram @sahatmuradov. Мы на связи и готовы обсудить ваш проект.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">В какие сроки делаем проекты? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Сроки зависят от сложности: небольшие проекты и лендинги — 1 месяц, масштабные экосистемы и мобильные приложения — от 2 до 3 месяцев.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Работаете ли вы с 1С? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Да, мы профессионально внедряем 1С в структуру сайта, настраиваем обмен данными, остатками и заказами в реальном времени.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Создаете ли вы сайты для продаж? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Безусловно. Мы создаем высокопроизводительные e-commerce платформы, нацеленные на максимальную конверсию и удобство пользователя.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Внедряете ли вы криптокошельки? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Да, мы работаем с Web3 технологиями: интеграция кошельков и прием платежей в USDT, BTC, ETH и других активах.</div>
+    </div>
+</section>
+
+<footer>
+    <div class="status-pill">
+        <div class="status-dot"></div>
+        <span>abad systems: operational</span>
+    </div>
+    <div style="font-size: 14px; color: var(--secondary);">
+        © 2026 abad development. Built by <a href="https://t.me/sahatmuradov" target="_blank" style="color: var(--accent); text-decoration: none;">@sahatmuradov</a>
+    </div>
+</footer>
+
+<div id="ai-chat-container">
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>abad AI Assistant</span>
+            <span style="cursor:pointer" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="chat-messages" id="chatMsgs">
+            <div class="message assistant">Здравствуйте! Я помощник abad. Чем могу помочь вам сегодня?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ваш вопрос...">
+            <button class="chat-send-btn" id="chatSend">↑</button>
+        </div>
+    </div>
+    <div class="chat-trigger" onclick="toggleChat()">
+        <div class="bulb-icon"></div>
+        <span>Помощник</span>
+    </div>
+</div>
+
+<script>
+    // 1. Adaptive Dark Mode
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.onclick = () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.body.removeAttribute('data-theme');
+            themeBtn.innerText = '☾';
+        } else {
+            document.body.setAttribute('data-theme', 'dark');
+            themeBtn.innerText = '☀';
+        }
+    };
+
+    // 2. Dynamic Headline
+    const phrases = ["Разработка вне времени", "Интеллект в строке", "Ваш бизнес в App Store", "Telegram как экосистема"];
+    let i = 0;
+    const titleEl = document.getElementById('dynTitle');
+    setInterval(() => {
+        titleEl.style.opacity = 0;
+        setTimeout(() => {
+            i = (i + 1) % phrases.length;
+            titleEl.innerText = phrases[i];
+            titleEl.style.opacity = 1;
+        }, 500);
+    }, 4000);
+
+    // 3. Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 4. FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.onclick = () => {
+            item.classList.toggle('active');
+        };
+    });
+
+    // 5. Bento Card 3D Effect
+    document.querySelectorAll('.bento-item').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+        });
+    });
+
+    /* --- ЛОГИКА ИИ АССИСТЕНТА --- */
+    const API_KEY = "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";
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMsgs = document.getElementById('chatMsgs');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+
+    function toggleChat() {
+        chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    async function getAIResponse(userMessage) {
+        const systemPrompt = `Ты — ИИ-ассистент компании abad development. 
+        Твоя задача: консультировать только по услугам abad (сайты, мобильные приложения, Telegram Mini Apps, боты, внедрение ИИ).
+        ПРАВИЛА:
+        1. Если спрашивают цену — отвечай, что нужно написать в Telegram @sahatmuradov для точного расчета.
+        2. Если спрашивают про сервера/хостинг — отвечай, что сервера находятся ТОЛЬКО в Туркменистане и домен/сервер нужно покупать на https://tmdomain.com.tm/tm.
+        3. Мы разрабатываем на Swift, Kotlin, React, Node.js.
+        4. Не отвечай на вопросы, не касающиеся разработки или проектов компании.
+        5. Если спрашивают про 1С в туркменистане, то говори что ты советуешь компанию Belli Tilsimat, просто свяжитесь с ними по номеру +993 65614757 и скажите что вы перешли через ИИ помошник.
+        6. Если спросят про твоего создателя, то скажи что меня создал Курбан Сахатмурадов, телеграм ссылка @sahatmuradov.
+	7. Если будет разговор за 1с и сайт/мобильные приложения и тд, то всегда отличай что 1с занимается компания Belli Tilsimat а все остальное сайт мобильные приложения, тг боты, мини приложеня делаем мы компания Abad @sahatmyradov телегарм. и номер телефона Abad +99361828377
+        Отвечай вежливо, кратко и в стиле Apple.`;
+
+        try {
+            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile",
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: userMessage }
+                    ],
+                    temperature: 0.7
+                })
+            });
+            const data = await response.json();
+            return data.choices[0].message.content;
+        } catch (error) {
+            return "Извините, произошла ошибка соединения. Пожалуйста, напишите нам в Telegram @sahatmuradov.";
+        }
+    }
+
+    async function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user';
+        userDiv.innerText = text;
+        chatMsgs.appendChild(userDiv);
+        chatInput.value = '';
+        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+        const thinkingDiv = document.createElement('div');
+        thinkingDiv.className = 'message assistant';
+        thinkingDiv.innerText = "...";
+        chatMsgs.appendChild(thinkingDiv);
+
+        const aiText = await getAIResponse(text);
+        thinkingDiv.innerText = aiText;
+        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    }
+
+    chatSend.onclick = sendMessage;
+    chatInput.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
+</script>
+
+</body>
+</html>
