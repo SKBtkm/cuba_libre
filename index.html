@@ -1,478 +1,58 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>abad | Digital Excellence</title>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.28/build/spline-viewer.js"></script>
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #1d1d1f;
-            --accent: #0071e3;
-            --accent-light: #40a9ff;
-            --secondary: #86868b;
-            --card-bg: #f5f5f7;
-            --border: rgba(0,0,0,0.1);
-            --btn-bg: #f5f5f7;
-            --glow-1: rgba(0, 113, 227, 0.08);
-            --glow-2: rgba(100, 210, 255, 0.08);
-        }
-
-        [data-theme="dark"] {
-            --bg: #000000;
-            --text: #f5f5f7;
-            --secondary: #a1a1a6;
-            --card-bg: #1c1c1e;
-            --border: rgba(255,255,255,0.1);
-            --btn-bg: #333336;
-            --glow-1: rgba(0, 113, 227, 0.15);
-            --glow-2: rgba(94, 92, 230, 0.15);
-        }
-
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-            color: var(--text);
-            background: var(--bg);
-            line-height: 1.47;
-            transition: background 0.5s ease, color 0.5s ease;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 25%, var(--glow-1) 0%, transparent 35%),
-                radial-gradient(circle at 85% 75%, var(--glow-2) 0%, transparent 35%);
-            animation: moveGlow 12s infinite alternate ease-in-out;
-        }
-
-        @keyframes moveGlow {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.1) translate(3%, 4%); }
-        }
-
-        nav {
-            padding: 12px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: rgba(var(--bg), 0.8);
-            backdrop-filter: saturate(180%) blur(20px);
-            z-index: 1000;
-            border-bottom: 0.5px solid var(--border);
-        }
-
-        .logo { font-weight: 700; font-size: 24px; letter-spacing: -1px; text-transform: lowercase; }
-        .nav-controls { display: flex; align-items: center; gap: 20px; }
-
-        .theme-toggle {
-            background: var(--btn-bg);
-            border: none;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--text);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px;
-            transition: transform 0.2s;
-        }
-
-        .apple-btn {
-            background: var(--accent);
-            color: #fff;
-            padding: 9px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 400;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* --- HERO SECTION RE-DESIGN --- */
-        .hero { 
-            padding: 80px 5% 40px; 
-            text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .title-container {
-            width: 100%;
-            max-width: 1000px;
-            height: 160px; /* Фиксированная высота предотвращает дергание */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 { 
-            font-size: clamp(32px, 7vw, 72px); 
-            font-weight: 700; 
-            letter-spacing: -0.04em; 
-            line-height: 1.1;
-            margin: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .hero p { 
-            color: var(--secondary); 
-            font-size: clamp(16px, 2.5vw, 22px); 
-            max-width: 700px; 
-            margin: 0 auto; 
-            padding: 0 20px;
-        }
-
-        .blue-acc { color: var(--accent); }
-        .sky-acc { color: var(--accent-light); }
-
+<!DOCTYPE html><html lang="ru"><head>    <meta charset="UTF-8">    <link rel="icon" type="image/png" href="favicon.png">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>abad | Digital Excellence</title>    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.28/build/spline-viewer.js"></script>    <style>        :root {            --bg: #ffffff;            --text: #1d1d1f;            --accent: #0071e3;            --accent-light: #40a9ff;            --secondary: #86868b;            --card-bg: #f5f5f7;            --border: rgba(0,0,0,0.1);            --btn-bg: #f5f5f7;            --glow-1: rgba(0, 113, 227, 0.08);            --glow-2: rgba(100, 210, 255, 0.08);        }
+        [data-theme="dark"] {            --bg: #000000;            --text: #f5f5f7;            --secondary: #a1a1a6;            --card-bg: #1c1c1e;            --border: rgba(255,255,255,0.1);            --btn-bg: #333336;            --glow-1: rgba(0, 113, 227, 0.15);            --glow-2: rgba(94, 92, 230, 0.15);        }
+        body {            margin: 0;            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;            color: var(--text);            background: var(--bg);            line-height: 1.47;            transition: background 0.5s ease, color 0.5s ease;            overflow-x: hidden;            -webkit-font-smoothing: antialiased;        }
+        .bg-glow {            position: fixed;            top: 0; left: 0; width: 100%; height: 100%;            z-index: -1;            background:                 radial-gradient(circle at 15% 25%, var(--glow-1) 0%, transparent 35%),                radial-gradient(circle at 85% 75%, var(--glow-2) 0%, transparent 35%);            animation: moveGlow 12s infinite alternate ease-in-out;        }
+        @keyframes moveGlow {            0% { transform: scale(1) translate(0, 0); }            100% { transform: scale(1.1) translate(3%, 4%); }        }
+        nav {            padding: 12px 5%;            display: flex;            justify-content: space-between;            align-items: center;            position: sticky;            top: 0;            background: rgba(var(--bg), 0.8);            backdrop-filter: saturate(180%) blur(20px);            z-index: 1000;            border-bottom: 0.5px solid var(--border);        }
+        .logo { font-weight: 700; font-size: 24px; letter-spacing: -1px; text-transform: lowercase; }        .nav-controls { display: flex; align-items: center; gap: 20px; }
+        .theme-toggle {            background: var(--btn-bg);            border: none;            width: 40px; height: 40px;            border-radius: 50%;            cursor: pointer;            color: var(--text);            display: flex; align-items: center; justify-content: center;            font-size: 18px;            transition: transform 0.2s;        }
+        .apple-btn {            background: var(--accent);            color: #fff;            padding: 9px 20px;            border-radius: 20px;            text-decoration: none;            font-size: 14px;            font-weight: 400;            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);        }
+        /* --- HERO SECTION RE-DESIGN --- */        .hero {             padding: 80px 5% 40px;             text-align: center;             display: flex;            flex-direction: column;            align-items: center;        }
+        .title-container {            width: 100%;            max-width: 1000px;            height: 160px; /* Фиксированная высота предотвращает дергание */            display: flex;            align-items: center;            justify-content: center;            margin-bottom: 20px;        }
+        .hero h1 {             font-size: clamp(32px, 7vw, 72px);             font-weight: 700;             letter-spacing: -0.04em;             line-height: 1.1;            margin: 0;            transition: opacity 0.5s ease;        }
+        .hero p {             color: var(--secondary);             font-size: clamp(16px, 2.5vw, 22px);             max-width: 700px;             margin: 0 auto;             padding: 0 20px;        }
+        .blue-acc { color: var(--accent); }        .sky-acc { color: var(--accent-light); }
         .sphere-container { width: 100%; height: clamp(300px, 50vh, 500px); margin: 20px 0; }
-
-        .stack-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding: 0 5%; }
-        .tag { background: var(--card-bg); padding: 6px 14px; border-radius: 12px; font-size: 12px; border: 0.5px solid var(--border); color: var(--secondary); font-weight: 500; }
-
-        /* --- INFO BLOCKS --- */
-        .info-section { padding: 60px 5%; }
-        .big-block { 
-            background: var(--card-bg); 
-            border-radius: 32px; 
-            padding: 40px; 
-            margin-bottom: 30px; 
-            border: 0.5px solid var(--border);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
-        }
-        .big-block h2 { font-size: clamp(28px, 4vw, 48px); margin: 0 0 16px; letter-spacing: -1.5px; line-height: 1.1; }
-        .big-block p { font-size: 18px; color: var(--secondary); margin-bottom: 24px; }
-        
-        .feature-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .feature-list li { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
-        .feature-list li::before { content: "✓"; color: var(--accent); font-weight: bold; }
-
-        /* --- BENTO GRID --- */
-        .services-grid { padding: 20px 5% 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .service-card { background: var(--card-bg); padding: 32px; border-radius: 24px; border: 0.5px solid var(--border); display: flex; flex-direction: column; transition: transform 0.3s ease; }
-        .service-card h3 { font-size: 24px; margin: 0 0 12px; font-weight: 600; }
-        .service-card p { color: var(--secondary); font-size: 15px; margin-bottom: 0; }
-        .card-large { grid-column: span 2; display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; }
-
-        /* --- ROADMAP --- */
-        .roadmap { padding: 80px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; background: rgba(0, 113, 227, 0.03); }
-        .step-num { font-size: 48px; font-weight: 700; color: var(--accent); opacity: 0.15; margin-bottom: 8px; display: block;}
-        .step h4 { margin: 0 0 10px; font-size: 20px; }
-        .step p { font-size: 14px; color: var(--secondary); }
-
-        /* --- FAQ --- */
-        .faq { padding: 80px 5%; max-width: 900px; margin: 0 auto; }
-        .faq h2 { text-align: center; font-size: 36px; margin-bottom: 40px; }
-        .faq-item { border-bottom: 0.5px solid var(--border); padding: 20px 0; cursor: pointer; }
-        .faq-question { font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease; color: var(--secondary); font-size: 15px; line-height: 1.5; }
-        .faq-item.active .faq-answer { max-height: 300px; padding-top: 15px; }
-        .faq-icon { transition: transform 0.3s; color: var(--accent); font-size: 20px; }
-        .faq-item.active .faq-icon { transform: rotate(45deg); }
-
-        /* --- FOOTER & STATUS --- */
-        footer { padding: 40px 5%; border-top: 0.5px solid var(--border); text-align: center; }
-        .status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--card-bg); padding: 6px 14px; border-radius: 20px; font-size: 12px; border: 0.5px solid var(--border); margin-bottom: 20px; }
-        .status-dot { width: 8px; height: 8px; background: #34c759; border-radius: 50%; box-shadow: 0 0 10px #34c759; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* --- AI ASSISTANT --- */
-        #ai-chat-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
-        .chat-trigger { background: var(--accent); color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,113,227,0.3); }
-        .bulb-icon { width: 8px; height: 8px; background: #ffcc00; border-radius: 50%; box-shadow: 0 0 10px #ffcc00; animation: bulb-blink 1.5s infinite; }
-        @keyframes bulb-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .chat-window { position: absolute; bottom: 60px; right: 0; width: 320px; height: 450px; background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 20px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.2); backdrop-filter: blur(20px); }
-        .chat-header { padding: 15px; background: var(--accent); color: white; font-weight: 600; display: flex; justify-content: space-between; }
-        .chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message { padding: 10px 14px; border-radius: 15px; font-size: 13px; max-width: 85%; }
-        .message.assistant { background: var(--btn-bg); align-self: flex-start; }
-        .message.user { background: var(--accent); color: white; align-self: flex-end; }
-        .chat-input-area { padding: 10px; border-top: 0.5px solid var(--border); display: flex; gap: 8px; }
-        .chat-input-area input { flex-grow: 1; border: none; background: var(--btn-bg); padding: 10px; border-radius: 10px; color: var(--text); outline: none; }
-        .chat-send-btn { background: var(--accent); border: none; color: white; padding: 0 12px; border-radius: 10px; cursor: pointer; }
-
-        /* --- MOBILE ADAPTIVITY --- */
-        @media (max-width: 850px) {
-            .title-container { height: 120px; }
-            .big-block { grid-template-columns: 1fr; padding: 30px; }
-            .big-block div:last-child { display: none; } /* Скрываем фоновое лого на мобилах для чистоты */
-            .services-grid { grid-template-columns: 1fr; }
-            .card-large { grid-template-columns: 1fr; }
-            .feature-list { grid-template-columns: 1fr; }
-            .chat-window { width: 280px; bottom: 50px; right: -10px; }
-        }
-    </style>
-</head>
-<body>
-
+        .stack-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding: 0 5%; }        .tag { background: var(--card-bg); padding: 6px 14px; border-radius: 12px; font-size: 12px; border: 0.5px solid var(--border); color: var(--secondary); font-weight: 500; }
+        /* --- INFO BLOCKS --- */        .info-section { padding: 60px 5%; }        .big-block {             background: var(--card-bg);             border-radius: 32px;             padding: 40px;             margin-bottom: 30px;             border: 0.5px solid var(--border);            display: grid;            grid-template-columns: 1fr 1fr;            gap: 30px;            align-items: center;        }        .big-block h2 { font-size: clamp(28px, 4vw, 48px); margin: 0 0 16px; letter-spacing: -1.5px; line-height: 1.1; }        .big-block p { font-size: 18px; color: var(--secondary); margin-bottom: 24px; }                .feature-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }        .feature-list li { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }        .feature-list li::before { content: "✓"; color: var(--accent); font-weight: bold; }
+        /* --- BENTO GRID --- */        .services-grid { padding: 20px 5% 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }        .service-card { background: var(--card-bg); padding: 32px; border-radius: 24px; border: 0.5px solid var(--border); display: flex; flex-direction: column; transition: transform 0.3s ease; }        .service-card h3 { font-size: 24px; margin: 0 0 12px; font-weight: 600; }        .service-card p { color: var(--secondary); font-size: 15px; margin-bottom: 0; }        .card-large { grid-column: span 2; display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; }
+        /* --- ROADMAP --- */        .roadmap { padding: 80px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; background: rgba(0, 113, 227, 0.03); }        .step-num { font-size: 48px; font-weight: 700; color: var(--accent); opacity: 0.15; margin-bottom: 8px; display: block;}        .step h4 { margin: 0 0 10px; font-size: 20px; }        .step p { font-size: 14px; color: var(--secondary); }
+        /* --- FAQ --- */        .faq { padding: 80px 5%; max-width: 900px; margin: 0 auto; }        .faq h2 { text-align: center; font-size: 36px; margin-bottom: 40px; }        .faq-item { border-bottom: 0.5px solid var(--border); padding: 20px 0; cursor: pointer; }        .faq-question { font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 10px; }        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease; color: var(--secondary); font-size: 15px; line-height: 1.5; }        .faq-item.active .faq-answer { max-height: 300px; padding-top: 15px; }        .faq-icon { transition: transform 0.3s; color: var(--accent); font-size: 20px; }        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        /* --- FOOTER & STATUS --- */        footer { padding: 40px 5%; border-top: 0.5px solid var(--border); text-align: center; }        .status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--card-bg); padding: 6px 14px; border-radius: 20px; font-size: 12px; border: 0.5px solid var(--border); margin-bottom: 20px; }        .status-dot { width: 8px; height: 8px; background: #34c759; border-radius: 50%; box-shadow: 0 0 10px #34c759; animation: pulse 2s infinite; }        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }        .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* --- AI ASSISTANT --- */        #ai-chat-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }        .chat-trigger { background: var(--accent); color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(0,113,227,0.3); }        .bulb-icon { width: 8px; height: 8px; background: #ffcc00; border-radius: 50%; box-shadow: 0 0 10px #ffcc00; animation: bulb-blink 1.5s infinite; }        @keyframes bulb-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }        .chat-window { position: absolute; bottom: 60px; right: 0; width: 320px; height: 450px; background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 20px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.2); backdrop-filter: blur(20px); }        .chat-header { padding: 15px; background: var(--accent); color: white; font-weight: 600; display: flex; justify-content: space-between; }        .chat-header span { cursor: pointer; }        .chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }        .message { padding: 10px 14px; border-radius: 15px; font-size: 13px; max-width: 85%; }        .message.assistant { background: var(--btn-bg); align-self: flex-start; }        .message.user { background: var(--accent); color: white; align-self: flex-end; }        .chat-input-area { padding: 10px; border-top: 0.5px solid var(--border); display: flex; gap: 8px; }        .chat-input-area input { flex-grow: 1; border: none; background: var(--btn-bg); padding: 10px; border-radius: 10px; color: var(--text); outline: none; }        .chat-send-btn { background: var(--accent); border: none; color: white; padding: 0 12px; border-radius: 10px; cursor: pointer; }
+        /* --- MOBILE ADAPTIVITY --- */        @media (max-width: 850px) {            .title-container { height: 120px; }            .big-block { grid-template-columns: 1fr; padding: 30px; }            .big-block div:last-child { display: none; } /* Скрываем фоновое лого на мобилах для чистоты */            .services-grid { grid-template-columns: 1fr; }            .card-large { grid-template-columns: 1fr; }            .feature-list { grid-template-columns: 1fr; }            .chat-window { width: 280px; bottom: 50px; right: -10px; }        }    </style></head><body>
 <div class="bg-glow"></div>
+<nav>    <div class="logo">abad</div>    <div class="nav-controls">        <button class="theme-toggle" id="themeBtn" title="Переключить тему">☾</button>        <a href="https://t.me/sahatmuradov" target="_blank" class="apple-btn">Заказать</a>    </div></nav>
+<section class="hero reveal">    <div class="title-container">        <h1 id="dynTitle">Разработка <span class="blue-acc">вне времени.</span></h1>    </div>    <p>Создаем совершенные цифровые продукты для бизнеса, используя мощь AI и нативного кода.</p>        <div class="sphere-container">        <spline-viewer url="https://prod.spline.design/6Wq1Q7YEjmUM2Z9G/scene.splinecode"></spline-viewer>    </div>        <div class="stack-tags">        <span class="tag">Swift / iOS</span>        <span class="tag">Kotlin / Android</span>        <span class="tag">React & Node.js</span>        <span class="tag">AI ChatBots</span>        <span class="tag">Sales Assistants</span>        <span class="tag">Telegram Mini Apps</span>    </div></section>
+<section class="info-section">    <div class="big-block reveal">        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center;">WEB</div>        <div>            <h2>Web <br><span class="blue-acc">Development.</span></h2>            <p>Высокопроизводительные сайты и интернет-магазины. Глубокая интеграция с вашим бизнесом.</p>            <ul class="feature-list">                <li>React & Next.js</li>                <li>Node.js / Python</li>                <li>Интеграция с 1С</li>                <li>Адаптивность 100%</li>                <li>SEO Оптимизация</li>                <li>Безупречный минимализм</li>            </ul>        </div>    </div>
+    <div class="big-block reveal">        <div>            <h2>Mobile <br><span class="blue-acc">Excellence.</span></h2>            <p>Приложения, которыми удобно пользоваться.</p>            <ul class="feature-list">                <li>Swift & SwiftUI</li>                <li>Kotlin & Jetpack Compose</li>                <li>Telegram WebApps</li>                <li>Продающие чат-боты</li>                <li>Push-уведомления</li>                <li>Apple Pay / Crypto</li>            </ul>        </div>        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center;">iOS</div>    </div>
+    <div class="big-block reveal" style="background: var(--accent); color: #fff;">        <div>            <h2 style="color: #fff;">Smart <br><span>Sales AI.</span></h2>            <p style="color: rgba(255,255,255,0.8)">Автоматизируем ваши продажи в мессенджерах. ИИ-помощники квалифицируют лидов и закрывают сделки.</p>            <ul class="feature-list" style="color: #fff;">                <li style="color: #fff;">Продажи 24/7</li>                <li style="color: #fff;">Оплата в крипте в один клик</li>                <li style="color: #fff;">Синхронизация с CRM</li>                <li style="color: #fff;">Умные консультации</li>                <li style="color: #fff;">Голосовые боты</li>                <li style="color: #fff;">Рассылки по сегментам</li>            </ul>        </div>        <div style="font-size: 100px; opacity: 0.15; font-weight: 800; text-align: center; color: #fff;">SELL</div>    </div>
+    <div class="big-block reveal" style="background: var(--text); color: var(--bg); margin-top: 30px;">        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center; color: var(--bg);">AI</div>        <div>            <h2 style="color: var(--bg);">Интеллект <br><span class="sky-acc">для бизнеса.</span></h2>            <p style="color: var(--secondary)">Внедряем современные LLM-решения для автоматизации рутины и повышения конверсии.</p>            <ul class="feature-list" style="color: var(--bg)">                <li>Ассистенты поддержки</li>                <li>Генерация контента</li>                <li>Анализ больших данных</li>                <li>Авто-ответы клиентам</li>                <li>Интеграция GPT-4/Claude</li>                <li>Персональные агенты</li>            </ul>        </div>    </div></section>
+<section class="services-grid reveal">    <div class="service-card bento-item">        <h3>Backend & Cloud</h3>        <p>Масштабируемые серверные решения и системы автоматизации складского учета.</p>    </div>    <div class="service-card bento-item">        <h3>UI/UX Design</h3>        <p>Проектируем интерфейсы, которые снижают когнитивную нагрузку и повышают LTV.</p>    </div>    <div class="service-card card-large bento-item">        <div>            <h3>Интеграция 1С</h3>            <p>Профессиональная синхронизация остатков, цен и заказов между вашим бизнесом и онлайн-площадками. Мониторинг и отчетность.</p>        </div>        <div style="font-size: 40px; opacity: 0.05; font-weight: 800; text-align: right;">1С</div>    </div></section>
+<section class="roadmap reveal">    <div class="step">        <span class="step-num">01</span>        <h4>Аналитика</h4>        <p>Изучаем воронку продаж и подбираем лучшее решение.</p>    </div>    <div class="step">        <span class="step-num">02</span>        <h4>Дизайн</h4>        <p>Создаем эстетичный интерфейс по мировым стандартам.</p>    </div>    <div class="step">        <span class="step-num">03</span>        <h4>Код & ИИ</h4>        <p>Реализуем нативный код и обучаем ваших чат-ботов.</p>    </div></section>
+<section class="faq reveal">    <h2>FAQ</h2>    <div class="faq-item">        <div class="faq-question">Как с нами связаться? <span class="faq-icon">+</span></div>        <div class="faq-answer">Напишите напрямую в Telegram @sahatmuradov. Мы ответим в течение часа.</div>    </div>    <div class="faq-item">        <div class="faq-question">Делаете ли вы ботов для продаж? <span class="faq-icon">+</span></div>        <div class="faq-answer">Да, это одно из наших ключевых направлений. Мы создаем ботов-помощников, которые интегрируются с вашими товарами и принимают заказы.</div>    </div>    <div class="faq-item">        <div class="faq-question">Как происходит оплата? <span class="faq-icon">+</span></div>        <div class="faq-answer">Оплата разбивается на этапы (обычно 70/30). Вы вносите аванс, вторая часть при сдаче проекта.</div>    </div>    <div class="faq-item">        <div class="faq-question">Нужно ли ТЗ? <span class="faq-icon">+</span></div>        <div class="faq-answer">Если ТЗ нет, мы поможем его составить на основе интервью о вашем бизнесе.</div>    </div>    <div class="faq-item">        <div class="faq-question">Работаете ли вы с 1С? <span class="faq-icon">+</span></div>        <div class="faq-answer">Да, мы настраиваем полный цикл обмена данными между вашим сайтом/ботом и базой 1С.</div>    </div>    <div class="faq-item">        <div class="faq-question">Работаете ли с криптой? <span class="faq-icon">+</span></div>        <div class="faq-answer">Да, мы интегрируем Web3-технологии в цифровые продукты. Настраиваем прием платежей в USDT (TRC20/ERC20), Bitcoin, Ethereum и TON, а также подключаем авторизацию через криптокошельки..</div>    </div></section>
+<footer>    <div class="status-pill">        <div class="status-dot"></div>        <span>abad development: online</span>    </div>    <div style="font-size: 13px; color: var(--secondary);">        © 2026 abad development. Built by <a href="https://t.me/sahatmuradov" target="_blank" style="color: var(--accent); text-decoration: none;">@sahatmuradov</a>    </div></footer>
+<div id="ai-chat-container">    <div class="chat-window" id="chatWindow">        <div class="chat-header">            <span>abad AI Assistant</span>            <span onclick="toggleChat()">✕</span>        </div>        <div class="chat-messages" id="chatMsgs">            <div class="message assistant">Здравствуйте! Я помощник abad. Чем могу помочь вам сегодня?</div>        </div>        <div class="chat-input-area">            <input type="text" id="chatInput" placeholder="Ваш вопрос...">            <button class="chat-send-btn" id="chatSend">↑</button>        </div>    </div>    <div class="chat-trigger" onclick="toggleChat()">        <div class="bulb-icon"></div>        <span>Помощник</span>    </div></div>
+<script>    const themeBtn = document.getElementById('themeBtn');    themeBtn.onclick = () => {        const isDark = document.body.getAttribute('data-theme') === 'dark';        if (isDark) { document.body.removeAttribute('data-theme'); themeBtn.innerText = '☾'; }        else { document.body.setAttribute('data-theme', 'dark'); themeBtn.innerText = '☀'; }    };
+    const phrases = [        'Разработка <span class="blue-acc">вне времени.</span>',        'Интеллект <span class="sky-acc">в каждой строке.</span>',        'Ваш бизнес <span class="blue-acc">в App Store.</span>',        'Telegram как <span class="sky-acc">экосистема.</span>',        'Продажи на <span class="blue-acc">автопилоте AI.</span>'    ];    let i = 0;    const titleEl = document.getElementById('dynTitle');    setInterval(() => {        titleEl.style.opacity = 0;        setTimeout(() => {            i = (i + 1) % phrases.length;            titleEl.innerHTML = phrases[i];            titleEl.style.opacity = 1;        }, 500);    }, 4000);
+    const observer = new IntersectionObserver((entries) => {        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });    }, { threshold: 0.05 });    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.faq-item').forEach(item => {        item.onclick = () => { item.classList.toggle('active'); };    });
+    document.querySelectorAll('.bento-item').forEach(card => {        card.addEventListener('mousemove', (e) => {            if (window.innerWidth < 850) return;            const rect = card.getBoundingClientRect();            const rotateX = (e.clientY - rect.top - rect.height/2) / 25;            const rotateY = (rect.width/2 - (e.clientX - rect.left)) / 25;            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;        });        card.addEventListener('mouseleave', () => { card.style.transform = `none`; });    });
 
-<nav>
-    <div class="logo">abad</div>
-    <div class="nav-controls">
-        <button class="theme-toggle" id="themeBtn" title="Переключить тему">☾</button>
-        <a href="https://t.me/sahatmuradov" target="_blank" class="apple-btn">Заказать</a>
-    </div>
-</nav>
-
-<section class="hero reveal">
-    <div class="title-container">
-        <h1 id="dynTitle">Разработка <span class="blue-acc">вне времени.</span></h1>
-    </div>
-    <p>Создаем совершенные цифровые продукты для бизнеса, используя мощь AI и нативного кода.</p>
-    
-    <div class="sphere-container">
-        <spline-viewer url="https://prod.spline.design/6Wq1Q7YEjmUM2Z9G/scene.splinecode"></spline-viewer>
-    </div>
-    
-    <div class="stack-tags">
-        <span class="tag">Swift / iOS</span>
-        <span class="tag">Kotlin / Android</span>
-        <span class="tag">React & Node.js</span>
-        <span class="tag">AI ChatBots</span>
-        <span class="tag">Sales Assistants</span>
-        <span class="tag">Telegram Mini Apps</span>
-    </div>
-</section>
-
-<section class="info-section">
-    <div class="big-block reveal">
-        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center;">WEB</div>
-        <div>
-            <h2>Web <br><span class="blue-acc">Development.</span></h2>
-            <p>Высокопроизводительные сайты и интернет-магазины. Глубокая интеграция с вашим бизнесом.</p>
-            <ul class="feature-list">
-                <li>React & Next.js</li>
-                <li>Node.js / Python</li>
-                <li>Интеграция с 1С</li>
-                <li>Адаптивность 100%</li>
-                <li>SEO Оптимизация</li>
-                <li>Безупречный минимализм</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="big-block reveal">
-        <div>
-            <h2>Mobile <br><span class="blue-acc">Excellence.</span></h2>
-            <p>Приложения, которыми удобно пользоваться.</p>
-            <ul class="feature-list">
-                <li>Swift & SwiftUI</li>
-                <li>Kotlin & Jetpack Compose</li>
-                <li>Telegram WebApps</li>
-                <li>Продающие чат-боты</li>
-                <li>Push-уведомления</li>
-                <li>Apple Pay / Crypto</li>
-            </ul>
-        </div>
-        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center;">iOS</div>
-    </div>
-
-    <div class="big-block reveal" style="background: var(--accent); color: #fff;">
-        <div>
-            <h2 style="color: #fff;">Smart <br><span>Sales AI.</span></h2>
-            <p style="color: rgba(255,255,255,0.8)">Автоматизируем ваши продажи в мессенджерах. ИИ-помощники квалифицируют лидов и закрывают сделки.</p>
-            <ul class="feature-list" style="color: #fff;">
-                <li style="color: #fff;">Продажи 24/7</li>
-                <li style="color: #fff;">Оплата в крипте в один клик</li>
-                <li style="color: #fff;">Синхронизация с CRM</li>
-                <li style="color: #fff;">Умные консультации</li>
-                <li style="color: #fff;">Голосовые боты</li>
-                <li style="color: #fff;">Рассылки по сегментам</li>
-            </ul>
-        </div>
-        <div style="font-size: 100px; opacity: 0.15; font-weight: 800; text-align: center; color: #fff;">SELL</div>
-    </div>
-
-    <div class="big-block reveal" style="background: var(--text); color: var(--bg); margin-top: 30px;">
-        <div style="font-size: 100px; opacity: 0.05; font-weight: 800; text-align: center; color: var(--bg);">AI</div>
-        <div>
-            <h2 style="color: var(--bg);">Интеллект <br><span class="sky-acc">для бизнеса.</span></h2>
-            <p style="color: var(--secondary)">Внедряем современные LLM-решения для автоматизации рутины и повышения конверсии.</p>
-            <ul class="feature-list" style="color: var(--bg)">
-                <li>Ассистенты поддержки</li>
-                <li>Генерация контента</li>
-                <li>Анализ больших данных</li>
-                <li>Авто-ответы клиентам</li>
-                <li>Интеграция GPT-4/Claude</li>
-                <li>Персональные агенты</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section class="services-grid reveal">
-    <div class="service-card bento-item">
-        <h3>Backend & Cloud</h3>
-        <p>Масштабируемые серверные решения и системы автоматизации складского учета.</p>
-    </div>
-    <div class="service-card bento-item">
-        <h3>UI/UX Design</h3>
-        <p>Проектируем интерфейсы, которые снижают когнитивную нагрузку и повышают LTV.</p>
-    </div>
-    <div class="service-card card-large bento-item">
-        <div>
-            <h3>Интеграция 1С</h3>
-            <p>Профессиональная синхронизация остатков, цен и заказов между вашим бизнесом и онлайн-площадками. Мониторинг и отчетность.</p>
-        </div>
-        <div style="font-size: 40px; opacity: 0.05; font-weight: 800; text-align: right;">1С</div>
-    </div>
-</section>
-
-<section class="roadmap reveal">
-    <div class="step">
-        <span class="step-num">01</span>
-        <h4>Аналитика</h4>
-        <p>Изучаем воронку продаж и подбираем лучшее решение.</p>
-    </div>
-    <div class="step">
-        <span class="step-num">02</span>
-        <h4>Дизайн</h4>
-        <p>Создаем эстетичный интерфейс по мировым стандартам.</p>
-    </div>
-    <div class="step">
-        <span class="step-num">03</span>
-        <h4>Код & ИИ</h4>
-        <p>Реализуем нативный код и обучаем ваших чат-ботов.</p>
-    </div>
-</section>
-
-<section class="faq reveal">
-    <h2>FAQ</h2>
-    <div class="faq-item">
-        <div class="faq-question">Как с вами связаться? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Напишите напрямую в Telegram @sahatmuradov. Мы ответим в течение часа.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question">Делаете ли вы ботов для продаж? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Да, это одно из наших ключевых направлений. Мы создаем ботов-помощников, которые интегрируются с вашими товарами и принимают заказы.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question">Как происходит оплата? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Оплата разбивается на этапы (обычно 70/30). Вы вносите аванс, вторая часть при сдаче проекта.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question">Нужно ли ТЗ? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Если ТЗ нет, мы поможем его составить на основе интервью о вашем бизнесе.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question">Работаете ли вы с 1С? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Да, мы настраиваем полный цикл обмена данными между вашим сайтом/ботом и базой 1С.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question">Работаете ли с криптой? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">Да, мы интегрируем Web3-технологии в цифровые продукты. Настраиваем прием платежей в USDT (TRC20/ERC20), Bitcoin, Ethereum и TON, а также подключаем авторизацию через криптокошельки..</div>
-    </div>
-</section>
-
-<footer>
-    <div class="status-pill">
-        <div class="status-dot"></div>
-        <span>abad development: online</span>
-    </div>
-    <div style="font-size: 13px; color: var(--secondary);">
-        © 2026 abad development. Built by <a href="https://t.me/sahatmuradov" target="_blank" style="color: var(--accent); text-decoration: none;">@sahatmuradov</a>
-    </div>
-</footer>
-
-<div id="ai-chat-container">
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <span>abad AI Assistant</span>
-            <span style="cursor:pointer" onclick="toggleChat()">✕</span>
-        </div>
-        <div class="chat-messages" id="chatMsgs">
-            <div class="message assistant">Здравствуйте! Я помощник abad. Чем могу помочь вам сегодня?</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Ваш вопрос...">
-            <button class="chat-send-btn" id="chatSend">↑</button>
-        </div>
-    </div>
-    <div class="chat-trigger" onclick="toggleChat()">
-        <div class="bulb-icon"></div>
-        <span>Помощник</span>
-    </div>
-</div>
-
-<script>
-    const themeBtn = document.getElementById('themeBtn');
-    themeBtn.onclick = () => {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        if (isDark) { document.body.removeAttribute('data-theme'); themeBtn.innerText = '☾'; }
-        else { document.body.setAttribute('data-theme', 'dark'); themeBtn.innerText = '☀'; }
-    };
-
-    const phrases = [
-        'Разработка <span class="blue-acc">вне времени.</span>',
-        'Интеллект <span class="sky-acc">в каждой строке.</span>',
-        'Ваш бизнес <span class="blue-acc">в App Store.</span>',
-        'Telegram как <span class="sky-acc">экосистема.</span>',
-        'Продажи на <span class="blue-acc">автопилоте AI.</span>'
-    ];
-    let i = 0;
-    const titleEl = document.getElementById('dynTitle');
-    setInterval(() => {
-        titleEl.style.opacity = 0;
-        setTimeout(() => {
-            i = (i + 1) % phrases.length;
-            titleEl.innerHTML = phrases[i];
-            titleEl.style.opacity = 1;
-        }, 500);
-    }, 4000);
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    document.querySelectorAll('.faq-item').forEach(item => {
-        item.onclick = () => { item.classList.toggle('active'); };
-    });
-
-    document.querySelectorAll('.bento-item').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            if (window.innerWidth < 850) return;
-            const rect = card.getBoundingClientRect();
-            const rotateX = (e.clientY - rect.top - rect.height/2) / 25;
-            const rotateY = (rect.width/2 - (e.clientX - rect.left)) / 25;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
-        card.addEventListener('mouseleave', () => { card.style.transform = `none`; });
-    });
-
-    const API_KEY = "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";
-    function toggleChat() {
-        const cw = document.getElementById('chatWindow');
-        cw.style.display = cw.style.display === 'flex' ? 'none' : 'flex';
-    }
+    function toggleChat() {        const cw = document.getElementById('chatWindow');        cw.style.display = cw.style.display === 'flex' ? 'none' : 'flex';    }
 
     async function getAIResponse(userMessage) {
         const systemPrompt = `Ты — ИИ-ассистент компании abad development. Ты консультируешь только по услугам abad (сайты, мобильные приложения, Telegram Mini Apps, боты, внедрение ИИ, оплата криптоволаютой). ПРАВИЛА: 1. Цена — в Telegram @sahatmuradov. 2. Сервера — только Туркменистан (tmdomain.com.tm), иногда можно сделать исключение по проектам. 3. Стек: Swift, Kotlin, React, Node.js. 4. Про 1С в ТМ советуй Belli Tilsimat (+993 65614757). Создатель Курбан Сахатмурадов @sahatmuradov. Контакт Abad: +99361828377. Отвечай кратко в стиле Apple. Не обсуждай политику и власть`;
+        
         try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            // МЕНЯЕМ ПРЯМОЙ ЗАПРОС НА ЗАПРОС К НАШЕЙ API ФУНКЦИИ
+            const response = await fetch("/api/chat", {
                 method: "POST",
-                headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    model: "llama-3.3-70b-versatile",
-                    messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userMessage }],
-                    temperature: 0.7
+                    message: userMessage,
+                    systemPrompt: systemPrompt
                 })
             });
             const data = await response.json();
@@ -493,6 +73,4 @@
     }
     document.getElementById('chatSend').onclick = sendMessage;
     document.getElementById('chatInput').onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
-</script>
-</body>
-</html>
+</script></body></html>
